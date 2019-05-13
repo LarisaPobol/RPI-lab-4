@@ -11,20 +11,27 @@ export default class Controller {
 
   InitializeEvents () {
     this.view.searchSource.addEventListener('change', (event) => {
-      this.model.ShowNews(this.view.searchInput.value, this.view.searchSource.value)
+      this.model.currPage = 1
+      this.model.countNews = 0
+      this.model.ShowNews(this.model.currPage, this.view.searchInput.value, this.view.searchSource.value)
     })
 
     this.view.searchButton.addEventListener('click', (event) => {
-      this.model.ShowNews(this.view.searchInput.value, this.view.searchSource.value)
+      this.model.currPage = 1
+      this.model.countNews = 0
+      this.model.ShowNews(this.model.currPage, this.view.searchInput.value, this.view.searchSource.value)
     })
 
     this.view.loadMoreButton.addEventListener('click', (event) => {
-      this.model.LoadMoreNews(this.view.searchInput.value, this.view.searchSource.value)
+      this.model.currPage++
+      this.model.LoadMoreNews(this.model.currPage, this.view.searchInput.value, this.view.searchSource.value)
     })
 
     this.view.searchInput.addEventListener('keyup', (event) => {
       if (event.keyCode === 13) {
-        this.model.ShowNews(this.view.searchInput.value, this.view.searchSource.value)
+        this.model.currPage = 1
+        this.model.countNews = 0
+        this.model.ShowNews(this.model.currPage, this.view.searchInput.value, this.view.searchSource.value)
       }
     })
   }

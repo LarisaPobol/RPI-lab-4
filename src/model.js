@@ -53,16 +53,17 @@ export default class Model {
     this.view.ClearScreen()
   }
 
-  ShowNews (text, source) {
+  ShowNews (page, text, source) {
     this.ClearScreen()
-    this.currPage = 1
-    this.countNews = 0
-    this.LoadNews(this.currPage, text, source)
+    // this.currPage = 1
+    // this.countNews = 0
+    this.LoadNews(page, text, source)
   }
 
-  LoadMoreNews (text, source) {
-    this.currPage++
-    this.LoadNews(this.currPage, text, source)
+  LoadMoreNews (page, text, source) {
+    // this.currPage++
+    alert(page)
+    this.LoadNews(page, text, source)
   }
 
   LoadNews (page, text, source) {
@@ -72,8 +73,25 @@ export default class Model {
       return response.json()
     }).then(json => {
       if (json.status) {
-        this.view.ShowNews(json.articles)
+        this.countNews += json.articles.length
+        this.ProcessNews(json.articles)
       }
     })
+  }
+
+  ProcessNews (articles) {
+    if (articles.length !== 0) {
+      this.view.ShowNews(articles)
+    } else {
+      if (this.currPage === 1) {
+        this.view.NoNewsToShow()
+      }
+    }
+    if (this.countNews > ((this.maxCountPages - 1) * this.countNewsOnPage)) {
+      this.view.DisallowLoadingNews(this.view.loadMoreButton)
+    }
+    if (articles.length < 5) {
+      this.view.DisallowLoadingNews(this.view.loadMoreButton)
+    }
   }
 }

@@ -54,12 +54,12 @@ export default class View {
     return newsCard
   }
 
-  ShowNews (articles, currCount) {
+  /* ShowNews (articles, currCount) {
     let documentFragment = document.createDocumentFragment()
     if (articles.length !== 0) {
       articles.forEach((article) => {
         documentFragment.appendChild(this.NewNewsCard(article))
-        this.model.countNews++
+       // this.model.countNews++
       })
     } else {
       if (this.model.currPage === 1) {
@@ -73,6 +73,15 @@ export default class View {
     if (articles.length < 5) {
       this.DisallowLoadingNews(LoadMoreButton)
     }
+    this.newsContainer.appendChild(documentFragment)
+  }
+*/
+
+  ShowNews (articles, currCount) {
+    let documentFragment = document.createDocumentFragment()
+    articles.forEach((article) => {
+      documentFragment.appendChild(this.NewNewsCard(article))
+    })
     this.newsContainer.appendChild(documentFragment)
   }
 
@@ -111,5 +120,12 @@ export default class View {
   ClearScreen () {
     this.newsContainer.innerHTML = ''
     this.AllowLoadingNews(LoadMoreButton)
+  }
+
+  NoNewsToShow () {
+    let documentFragment = document.createDocumentFragment()
+    const noNews = this.NoNewsFounded()
+    documentFragment.appendChild(noNews)
+    this.newsContainer.appendChild(documentFragment)
   }
 }
