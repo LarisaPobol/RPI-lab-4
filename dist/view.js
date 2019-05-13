@@ -81,46 +81,10 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/view.js");
 /******/ })
 /************************************************************************/
 /******/ ({
-
-/***/ "./src/controller.js":
-/*!***************************!*\
-  !*** ./src/controller.js ***!
-  \***************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Controller; });\n/* harmony import */ var _model_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./model.js */ \"./src/model.js\");\n/* harmony import */ var _view_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./view.js */ \"./src/view.js\");\n\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\n\n\n\nvar Controller =\n/*#__PURE__*/\nfunction () {\n  function Controller() {\n    _classCallCheck(this, Controller);\n\n    this.model = new _model_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\n    this.view = new _view_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"](this.model);\n  }\n\n  _createClass(Controller, [{\n    key: \"InitializeEvents\",\n    value: function InitializeEvents() {\n      var _this = this;\n\n      this.view.searchSource.addEventListener('change', function (event) {\n        _this.model.ShowNews(_this.view.searchInput.value, _this.view.searchSource.value);\n      });\n      this.view.searchButton.addEventListener('click', function (event) {\n        _this.model.ShowNews(_this.view.searchInput.value, _this.view.searchSource.value);\n      });\n      this.view.loadMoreButton.addEventListener('click', function (event) {\n        _this.model.LoadMoreNews(_this.view.searchInput.value, _this.view.searchSource.value);\n      });\n      this.view.searchInput.addEventListener('keyup', function (event) {\n        if (event.keyCode === 13) {\n          _this.model.ShowNews(_this.view.searchInput.value, _this.view.searchSource.value);\n        }\n      });\n    }\n  }]);\n\n  return Controller;\n}();\n\n\n\n//# sourceURL=webpack:///./src/controller.js?");
-
-/***/ }),
-
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _controller_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./controller.js */ \"./src/controller.js\");\n\n\n\nvar controller = new _controller_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\ncontroller.model.LoadSources();\ncontroller.model.ShowNews();\ncontroller.InitializeEvents();\n\n//# sourceURL=webpack:///./src/index.js?");
-
-/***/ }),
-
-/***/ "./src/model.js":
-/*!**********************!*\
-  !*** ./src/model.js ***!
-  \**********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return Model; });\n/* harmony import */ var _view_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./view.js */ \"./src/view.js\");\n\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }\n\nfunction _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }\n\n\nvar KEYAPI = '3e20ece38e0a4088a36c52e80611a32e';\nvar SourcesUrlHeading = 'https://newsapi.org/v2/sources?country=us&language=en';\nvar NewsUrlHeading = 'https://newsapi.org/v2/top-headlines?language=en';\nvar MaxCountPages = 8;\nvar CountNewsOnPage = 5;\n\nvar Model =\n/*#__PURE__*/\nfunction () {\n  function Model() {\n    _classCallCheck(this, Model);\n\n    this.view = new _view_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"](this);\n    this.KeyApi = KEYAPI;\n    this.sourcesUrlHeading = SourcesUrlHeading;\n    this.newsUrlHeading = NewsUrlHeading;\n    this.countNewsOnPage = 5;\n    this.maxCountPages = MaxCountPages;\n    this.countNews = 0;\n    this.currPage = 1;\n  }\n\n  _createClass(Model, [{\n    key: \"createUrl\",\n    value: function createUrl(heading, currPage, countNewsOnPage, text, source) {\n      var url = heading;\n\n      if (currPage != null) {\n        url += '&page=' + currPage;\n      }\n\n      if (countNewsOnPage != null) {\n        url += '&pageSize=' + countNewsOnPage;\n      }\n\n      if (text !== undefined) {\n        url += '&q=' + text;\n      }\n\n      if (source !== undefined && source !== 'any') {\n        url += '&sources=' + source;\n      }\n\n      url += '&apiKey=' + this.KeyApi;\n      return url;\n    }\n  }, {\n    key: \"LoadSources\",\n    value: function LoadSources() {\n      var _this = this;\n\n      var url = this.createUrl(this.sourcesUrlHeading, null, null, null, null);\n      var request = new Request(url);\n      fetch(request).then(function (response) {\n        return response.json();\n      }).then(function (json) {\n        if (json.status) {\n          _this.view.LoadSources(json);\n        }\n      });\n    }\n  }, {\n    key: \"ClearScreen\",\n    value: function ClearScreen() {\n      this.view.ClearScreen();\n    }\n  }, {\n    key: \"ShowNews\",\n    value: function ShowNews(text, source) {\n      this.ClearScreen();\n      this.currPage = 1;\n      this.countNews = 0;\n      this.LoadNews(this.currPage, text, source);\n    }\n  }, {\n    key: \"LoadMoreNews\",\n    value: function LoadMoreNews(text, source) {\n      this.currPage++;\n      this.LoadNews(this.currPage, text, source);\n    }\n  }, {\n    key: \"LoadNews\",\n    value: function LoadNews(page, text, source) {\n      var _this2 = this;\n\n      var url = this.createUrl(this.newsUrlHeading, page, CountNewsOnPage, text, source);\n      var request = new Request(url);\n      fetch(request).then(function (response) {\n        return response.json();\n      }).then(function (json) {\n        if (json.status) {\n          _this2.view.ShowNews(json.articles);\n        }\n      });\n    }\n  }]);\n\n  return Model;\n}();\n\n\n\n//# sourceURL=webpack:///./src/model.js?");
-
-/***/ }),
 
 /***/ "./src/view.js":
 /*!*********************!*\
