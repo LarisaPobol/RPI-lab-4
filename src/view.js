@@ -8,6 +8,7 @@ const LoadMoreButton = document.getElementById('load-more')
 const NoPhoto = '../src/images/noPhoto.png'
 const selectId = 'selector-sourses'
 const notFound = 'There are no articles matching your request'
+const AnySource = 'any source'
 export default class View {
   constructor (model) {
     this.model = model
@@ -16,6 +17,7 @@ export default class View {
     this.searchInput = SearchInput
     this.searchSource = SearchSource
     this.loadMoreButton = LoadMoreButton
+    this.anySource = AnySource
   }
 
   NewNewsCard (article) {
@@ -32,7 +34,6 @@ export default class View {
     if (article.urlToImage !== null) {
       newsCardImage.setAttribute('src', article.urlToImage)
     } else {
-      alert(1)
       newsCardImage.setAttribute('src', NoPhoto)
     }
     newsCard.appendChild(newsCardImage)
@@ -79,8 +80,8 @@ export default class View {
     let documentFragment = document.createDocumentFragment()
     let select = document.getElementById(selectId)
     let firstItem = document.createElement('option')
-    firstItem.value = 'any'
-    firstItem.textContent = 'any'
+    firstItem.value = this.anySource
+    firstItem.textContent = this.anySource
     let sources = json.sources
     documentFragment.appendChild(firstItem)
     sources.forEach(function (sourceItem) {

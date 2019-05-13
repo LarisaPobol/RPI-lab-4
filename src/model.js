@@ -2,7 +2,7 @@
 
 import View from './view.js'
 
-const KEYAPI = '3e20ece38e0a4088a36c52e80611a32e'
+const KEYAPI = 'fde3140779fa420594d49f7c877160bc'
 const SourcesUrlHeading = 'https://newsapi.org/v2/sources?country=us&language=en'
 const NewsUrlHeading = 'https://newsapi.org/v2/top-headlines?language=en'
 const MaxCountPages = 8
@@ -30,7 +30,7 @@ export default class Model {
     if (text !== undefined) {
       url += '&q=' + text
     }
-    if ((source !== undefined) && (source !== 'any')) {
+    if ((source !== undefined) && (source !== this.view.anySource)) {
       url += '&sources=' + source
     }
     url += '&apiKey=' + this.KeyApi
