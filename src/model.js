@@ -61,8 +61,6 @@ export default class Model {
   }
 
   LoadMoreNews (page, text, source) {
-    // this.currPage++
-    alert(page)
     this.LoadNews(page, text, source)
   }
 

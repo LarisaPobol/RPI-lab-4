@@ -10,8 +10,7 @@ const selectId = 'selector-sourses'
 const notFound = 'There are no articles matching your request'
 const AnySource = 'any source'
 export default class View {
-  constructor (model) {
-    this.model = model
+  constructor () {
     this.newsContainer = NewsContainer
     this.searchButton = SearchButton
     this.searchInput = SearchInput
